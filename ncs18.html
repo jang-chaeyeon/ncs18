@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>ncs18</title>
+    <style>
+        .resultBtn{ width:600px; height:30px; font-size:15px;
+            margin:20px 0px 20px 0px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>합과 평균을 출력해드립니다.</h1>
+    <div class="firstUser">
+        <span>1번 : </span>
+        <input type="number">
+        <input type="number">
+        <input type="number">
+    </div>
+    <div class="secondUser">
+        <span>2번 : </span>
+        <input type="number">
+        <input type="number">
+        <input type="number">
+    </div>
+    <div class="thirdUser">
+        <span>3번 : </span>
+        <input type="number">
+        <input type="number">
+        <input type="number">
+    </div>
+    <input class="resultBtn" type="button" value="출력" onclick="resultFunc()">
+
+    <div>
+        <span>1번 : </span>
+        <span>합계 = </span>
+        <input class="firstUserSumResult" readonly/>
+        <span>평균 = </span>
+        <input class="firstUserAgeResult" readonly/>
+    </div>
+    <div>
+        <span>2번 : </span>
+        <span>합계 = </span>
+        <input class="secondUserSumResult" readonly/>
+        <span>평균 = </span>
+        <input class="secondUserAgeResult" readonly/>
+    </div>
+    <div>
+        <span>3번 : </span>
+        <span>합계 = </span>
+        <input class="thirdUserSumResult" readonly/>
+        <span>평균 = </span>
+        <input class="thirdUserAgeResult" readonly/>
+    </div>
+</body>
+
+<script>
+    class Student {
+        constructor(name, koreanScore, englishScore, mathScore) {
+            this.name = name;
+            this.koreanScore = parseInt(koreanScore) || 0;
+            this.englishScore = parseInt(englishScore) || 0;
+            this.mathScore = parseInt(mathScore) || 0;
+        }
+
+        getSum() {
+            return this.koreanScore + this.englishScore + this.mathScore;
+        }
+
+        getAverage() {
+            let subjectCount = 0;
+            if (this.koreanScore !== 0) subjectCount++;
+            if (this.englishScore !== 0) subjectCount++;
+            if (this.mathScore !== 0) subjectCount++;
+
+            return this.getSum() / subjectCount;
+        }
+    }
+
+    function resultFunc() {
+
+        const firstUserValue = $('.firstUser input[type="number"]').map(function() {
+            return $(this).val();
+        }).get();
+        const secondUserValue = $('.secondUser input[type="number"]').map(function() {
+            return $(this).val();
+        }).get();
+        const thirdUserValue = $('.thirdUser input[type="number"]').map(function() {
+            return $(this).val();
+        }).get();
+
+        const student1 = new Student("학생1", firstUserValue[0], firstUserValue[1], firstUserValue[2]);
+        const student2 = new Student("학생2", secondUserValue[0], secondUserValue[1], secondUserValue[2]);
+        const student3 = new Student("학생3", thirdUserValue[0], thirdUserValue[1], thirdUserValue[2]);
+
+        $(`.firstUserSumResult`).val(student1.getSum());
+        $(`.firstUserAgeResult`).val(student1.getAverage().toFixed(3));
+
+        $(`.secondUserSumResult`).val(student2.getSum());
+        $(`.secondUserAgeResult`).val(student2.getAverage().toFixed(3));
+        
+        $(`.thirdUserSumResult`).val(student3.getSum());
+        $(`.thirdUserAgeResult`).val(student3.getAverage().toFixed(3));
+
+    };
+</script>
+
+
+</html>
